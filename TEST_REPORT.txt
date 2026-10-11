@@ -1,0 +1,51 @@
+BUGBREAK UPDATE 1.2 · ENEMY UPRISING — QA REPORT
+
+STATIC / SYNTAX
+PASS - data.js parses with Node.
+PASS - ui.js parses with Node.
+PASS - game.js parses with Node.
+PASS - enemy-mode.js parses with Node.
+PASS - manifest.json parses as JSON.
+PASS - every $('id') reference in UI/game/enemy code has a matching element in index.html.
+
+SAVE MIGRATION SMOKE TEST
+A simulated real Update 1.1 save was loaded with:
+- 987 current Gems
+- 1,234 lifetime Gems
+- Normal best Wave 37
+- Hard best Wave 11
+- 3 Normal wins
+- Halloween win / Ghost Moth unlocked
+- Bite Lv 5, Carapace Lv 4, Boss Breaker Lv 2
+- existing settings and seasonal data
+PASS - all listed existing values survived migration.
+PASS - save version migrated to 9 without replacing the old values.
+PASS - new Battle Metabolism upgrade initialized at rank 0.
+PASS - new Enemy XP initialized at 0 and Enemy Level at 1.
+PASS - Autumn reward unlock initialized false without affecting Halloween unlock.
+PASS - save key remains exactly: bugbreak-update1-save
+
+ENEMY MODE PROGRESSION SMOKE TEST
+PASS - 26 Normal/Hard enemy shop entries.
+PASS - 11 Halloween-only enemy shop entries.
+PASS - 7 Harvest-only enemy shop entries.
+PASS - Hard uses the Normal ownership catalog but renders relic/Nightfall forms automatically.
+PASS - a permanently owned Boss5 selected on Wave 2 was rejected by the wave gate and Garden Ant spawned instead.
+PASS - the same owned Boss5 became the selected spawn class at Wave 48.
+PASS - Boss5 requirements: 3,300 Gems, Enemy Level 76, Wave 48.
+PASS - Harvest victory sets autumnWin=true, permanently unlocking Harvest Cicada.
+
+FINAL BOSS AUDIO
+PASS - final-normal.mp3 exists and is mapped to Normal Wave 50.
+PASS - final-hard.mp3 exists and is mapped to Hard Wave 50.
+PASS - final-halloween.mp3 exists and is mapped to Halloween Wave 20.
+PASS - final-autumn.mp3 exists and is mapped to Harvest Wave 25.
+
+PERFORMANCE
+- Enemy Mode caps active allied attackers at 10 in Performance Mode / 15 normally.
+- Only three smart defender bots are active at once.
+- Enemy XP combat awards persist without rerendering the hidden menu every hit.
+- Service worker pre-caches core code/SFX only; large music files are cached lazily after use instead of blocking initial installation.
+
+SCREENSHOTS
+Six real browser-rendered QA screenshots from the Update 1.1 base build remain included in this flat package. The current environment blocked local Chromium navigation while building Update 1.2, so this report does NOT falsely claim new browser screenshots for Enemy Mode. Update 1.2 runtime logic was smoke-tested through a DOM/canvas mock harness plus syntax/data validation.
